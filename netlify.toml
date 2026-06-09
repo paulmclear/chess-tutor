@@ -1,0 +1,53 @@
+# Netlify configuration — static site, no build step.
+# The whole repo root is published; index.html is the entry point.
+
+[build]
+  publish = "."
+  command = ""
+
+# --- Keep private learning-workspace files OUT of the public site ---
+# These are served as a 404 so notes, mission, brand system, and learning
+# records aren't publicly reachable even by direct URL.
+
+[[redirects]]
+  from = "/MISSION.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/NOTES.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/RESOURCES.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/paul-brand-system.html"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/learning-records/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.claude/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Light, sensible security headers for a static site.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

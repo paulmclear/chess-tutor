@@ -4,7 +4,8 @@
       "Read(//Users/paulmclear/.claude/skills/teach/**)",
       "Bash(cat MISSION-FORMAT.md)",
       "Bash(cat LEARNING-RECORD-FORMAT.md)",
-      "Bash(cat RESOURCES-FORMAT.md)"
+      "Bash(cat RESOURCES-FORMAT.md)",
+      "Bash(gh repo *)"
     ]
   }
 }
