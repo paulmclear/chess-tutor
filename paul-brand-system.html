@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul — Personal Brand System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* ========================================
+     PAUL — BRAND SYSTEM v1.0
+     Refined Naturalist · Financial Crime × AI
+     ======================================== */
+
+  :root {
+    /* === COLOUR PALETTE === */
+
+    /* Canopy — deep nature greens */
+    --canopy-950:  #0c1a10;
+    --canopy-900:  #142b1a;
+    --canopy-800:  #1e4028;
+    --canopy-700:  #2a5736;
+    --canopy-600:  #3a7049;
+    --canopy-500:  #4d8c5e;  /* primary green */
+    --canopy-400:  #6aaa7a;
+    --canopy-300:  #90c49e;
+    --canopy-200:  #bcddc7;
+    --canopy-100:  #ddf0e4;
+    --canopy-50:   #f0f9f3;
+
+    /* Birch — warm neutrals from the bark + skin tones */
+    --birch-950:   #1a1512;
+    --birch-900:   #2d2620;
+    --birch-800:   #4a3f37;
+    --birch-700:   #6b5c51;
+    --birch-600:   #8c7b6e;
+    --birch-500:   #aa9b8e;
+    --birch-400:   #c4b8ae;
+    --birch-300:   #d8cfc9;
+    --birch-200:   #ece8e4;
+    --birch-100:   #f5f3f0;
+    --birch-50:    #faf9f7;
+
+    /* Slate — from the navy jacket */
+    --slate-900:   #0d1929;
+    --slate-800:   #162338;
+    --slate-700:   #1e3150;
+    --slate-600:   #274069;
+    --slate-500:   #2f5082;
+    --slate-400:   #4a72a8;
+    --slate-300:   #7b9dc8;
+    --slate-200:   #b0c5df;
+    --slate-100:   #d8e5f0;
+    --slate-50:    #eef4fa;
+
+    /* Tortoise — from the frames, used as accent */
+    --tortoise-700: #4a2c0a;
+    --tortoise-600: #6b4012;
+    --tortoise-500: #8c5a1e;  /* key accent */
+    --tortoise-400: #b07830;
+    --tortoise-300: #cc9e58;
+    --tortoise-200: #e4c898;
+    --tortoise-100: #f5e8cc;
+
+    /* Claude-like coral/rust accent */
+    --claude-600:  #c25840;
+    --claude-500:  #d96b52;
+    --claude-400:  #e88870;
+    --claude-200:  #f5c8be;
+    --claude-100:  #fceae6;
+
+    /* === SEMANTIC TOKENS === */
+    --bg-base:        var(--birch-50);
+    --bg-surface:     #ffffff;
+    --bg-elevated:    var(--birch-100);
+    --bg-inset:       var(--canopy-50);
+    --bg-dark:        var(--canopy-900);
+    --bg-dark-surface:var(--canopy-800);
+
+    --text-primary:   var(--birch-950);
+    --text-secondary: var(--birch-700);
+    --text-muted:     var(--birch-500);
+    --text-inverse:   var(--canopy-50);
+    --text-accent:    var(--canopy-600);
+
+    --border-subtle:  var(--birch-200);
+    --border-default: var(--birch-300);
+    --border-strong:  var(--birch-500);
+
+    --accent-primary:   var(--canopy-500);
+    --accent-secondary: var(--tortoise-500);
+    --accent-tertiary:  var(--claude-500);
+    --accent-nav:       var(--slate-600);
+
+    /* === TYPOGRAPHY === */
+    --font-display:  'Playfair Display', Georgia, serif;
+    --font-body:     'Libre Baskerville', Georgia, serif;
+    --font-ui:       'DM Sans', sans-serif;
+    --font-mono:     'DM Mono', 'Courier New', monospace;
+
+    /* === SPACING === */
+    --space-1: 4px; --space-2: 8px; --space-3: 12px;
+    --space-4: 16px; --space-5: 20px; --space-6: 24px;
+    --space-8: 32px; --space-10: 40px; --space-12: 48px;
+    --space-16: 64px; --space-20: 80px;
+
+    /* === RADII === */
+    --radius-sm: 4px; --radius-md: 8px;
+    --radius-lg: 16px; --radius-xl: 24px;
+    --radius-pill: 999px;
+
+    /* === SHADOWS === */
+    --shadow-sm:  0 1px 3px rgba(12,26,16,0.08), 0 1px 2px rgba(12,26,16,0.04);
+    --shadow-md:  0 4px 12px rgba(12,26,16,0.10), 0 2px 4px rgba(12,26,16,0.06);
+    --shadow-lg:  0 12px 32px rgba(12,26,16,0.12), 0 4px 8px rgba(12,26,16,0.06);
+    --shadow-inset: inset 0 1px 3px rgba(12,26,16,0.08);
+  }
+
+  /* ---- RESET ---- */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg-base);
+    color: var(--text-primary);
+    min-height: 100vh;
+  }
+
+  /* ---- LAYOUT ---- */
+  .brand-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-8);
+  }
+
+  section { margin-bottom: var(--space-16); }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--space-6);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
+  }
+
+  /* ---- MASTHEAD ---- */
+  .masthead {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: var(--space-8);
+    padding-bottom: var(--space-12);
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: var(--space-16);
+  }
+
+  .masthead-wordmark {
+    font-family: var(--font-display);
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--canopy-900);
+    line-height: 1;
+  }
+
+  .masthead-wordmark em {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--canopy-500);
+  }
+
+  .masthead-meta {
+    text-align: right;
+  }
+
+  .masthead-role {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+    line-height: 1.8;
+  }
+
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: var(--canopy-900);
+    color: var(--canopy-200);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    margin-top: var(--space-2);
+  }
+
+  .brand-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--canopy-400);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---- COLOUR SWATCHES ---- */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--space-4);
+  }
+
+  .palette-group { display: flex; flex-direction: column; gap: var(--space-2); }
+
+  .palette-group-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: var(--space-1);
+  }
+
+  .swatch-stack { display: flex; flex-direction: column; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+
+  .swatch {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    transition: transform 0.15s ease;
+  }
+  .swatch:hover { transform: scaleX(1.02); z-index: 1; }
+
+  .swatch-name { opacity: 0.7; }
+  .swatch-hex  { opacity: 0.55; }
+
+  /* ---- TYPOGRAPHY ---- */
+  .type-specimens { display: flex; flex-direction: column; gap: var(--space-8); }
+
+  .type-specimen {
+    padding: var(--space-6);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-3);
+    letter-spacing: 0.08em;
+  }
+
+  .t-display { font-family: var(--font-display); font-size: 42px; font-weight: 600; letter-spacing: -0.02em; color: var(--canopy-900); line-height: 1.1; }
+  .t-display-italic { font-family: var(--font-display); font-size: 36px; font-weight: 400; font-style: italic; color: var(--canopy-600); }
+  .t-heading { font-family: var(--font-body); font-size: 22px; font-weight: 700; color: var(--text-primary); }
+  .t-subheading { font-family: var(--font-ui); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .t-body { font-family: var(--font-body); font-size: 15px; line-height: 1.7; color: var(--text-secondary); max-width: 60ch; }
+  .t-ui { font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); }
+  .t-mono { font-family: var(--font-mono); font-size: 13px; color: var(--canopy-700); background: var(--canopy-50); padding: 2px 6px; border-radius: 3px; }
+  .t-label { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+
+  /* ---- COMPONENTS ---- */
+  .component-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .component-grid { grid-template-columns: 1fr; }
+    .masthead { grid-template-columns: 1fr; }
+    .masthead-meta { text-align: left; }
+  }
+
+  .component-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .component-card h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--space-5);
+  }
+
+  /* Buttons */
+  .btn-row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+  .btn {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 9px 18px;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary { background: var(--canopy-700); color: white; }
+  .btn-primary:hover { background: var(--canopy-600); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .btn-secondary { background: transparent; color: var(--canopy-700); border: 1.5px solid var(--canopy-400); }
+  .btn-secondary:hover { background: var(--canopy-50); }
+
+  .btn-accent { background: var(--tortoise-500); color: white; }
+  .btn-accent:hover { background: var(--tortoise-600); }
+
+  .btn-ghost { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border-default); }
+  .btn-ghost:hover { background: var(--bg-elevated); }
+
+  /* Tags / Chips */
+  .tag-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.04em;
+  }
+  .tag-green   { background: var(--canopy-100); color: var(--canopy-700); }
+  .tag-slate   { background: var(--slate-100);  color: var(--slate-700); }
+  .tag-tortoise{ background: var(--tortoise-100); color: var(--tortoise-700); }
+  .tag-claude  { background: var(--claude-100); color: var(--claude-600); }
+  .tag-neutral { background: var(--birch-200); color: var(--birch-800); }
+
+  /* Stat card */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+
+  .stat-item {
+    background: var(--bg-inset);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    border: 1px solid var(--canopy-100);
+  }
+  .stat-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--canopy-800);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label { font-family: var(--font-ui); font-size: 11px; color: var(--text-muted); font-weight: 400; }
+
+  /* Progress / indicator */
+  .progress-list { display: flex; flex-direction: column; gap: var(--space-3); }
+
+  .progress-item label {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  .progress-track {
+    height: 6px;
+    background: var(--birch-200);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    transition: width 0.6s ease;
+  }
+
+  /* Alert / callout */
+  .callout {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-md);
+    border-left: 3px solid;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .callout-info    { background: var(--canopy-50); border-color: var(--canopy-400); color: var(--canopy-900); }
+  .callout-warning { background: var(--tortoise-100); border-color: var(--tortoise-400); color: var(--tortoise-700); }
+  .callout-action  { background: var(--claude-100); border-color: var(--claude-400); color: var(--claude-600); }
+
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Nav strip */
+  .nav-strip {
+    background: var(--canopy-900);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-5);
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .nav-item {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--canopy-300);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: none;
+    background: transparent;
+  }
+  .nav-item:hover { background: var(--canopy-700); color: white; }
+  .nav-item.active {
+    background: var(--canopy-600);
+    color: white;
+    font-weight: 500;
+  }
+
+  .nav-spacer { flex: 1; }
+
+  .nav-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--canopy-600);
+    border: 2px solid var(--canopy-400);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: white;
+    font-weight: 600;
+  }
+
+  /* ---- DARK DEMO ---- */
+  .dark-demo {
+    background: var(--canopy-900);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    color: var(--text-inverse);
+    grid-column: 1 / -1;
+  }
+
+  .dark-demo h4 { color: var(--canopy-300); }
+
+  .dark-kpi-row {
+    display: flex;
+    gap: var(--space-6);
+    margin-top: var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .dark-kpi {
+    flex: 1;
+    min-width: 100px;
+    background: var(--canopy-800);
+    border: 1px solid var(--canopy-700);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+
+  .dark-kpi-value {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--canopy-100);
+    line-height: 1;
+  }
+  .dark-kpi-value span {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--canopy-400);
+    font-family: var(--font-mono);
+    margin-left: 4px;
+  }
+
+  .dark-kpi-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--canopy-400);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .dark-kpi-delta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--canopy-400);
+    margin-top: 4px;
+  }
+
+  .delta-up   { color: var(--canopy-300); }
+  .delta-down { color: var(--claude-400); }
+
+  /* ---- ICON MOTIF ---- */
+  .motif-row { display: flex; align-items: center; gap: var(--space-6); flex-wrap: wrap; }
+
+  .motif-mark {
+    width: 56px; height: 56px;
+    border-radius: var(--radius-md);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    box-shadow: var(--shadow-md);
+  }
+
+  /* ---- SPACING SCALE ---- */
+  .space-scale { display: flex; align-items: flex-end; gap: var(--space-4); }
+  .space-block {
+    background: var(--canopy-200);
+    border-radius: 2px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .space-label { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ---- FOOTER ---- */
+  .brand-footer {
+    margin-top: var(--space-20);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-footer p { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); }
+
+  /* ---- ANIMATION ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  section {
+    animation: fadeUp 0.5s ease both;
+  }
+  section:nth-child(1) { animation-delay: 0.05s; }
+  section:nth-child(2) { animation-delay: 0.12s; }
+  section:nth-child(3) { animation-delay: 0.20s; }
+  section:nth-child(4) { animation-delay: 0.28s; }
+  section:nth-child(5) { animation-delay: 0.36s; }
+  section:nth-child(6) { animation-delay: 0.44s; }
+  section:nth-child(7) { animation-delay: 0.52s; }
+</style>
+</head>
+<body>
+
+<div class="brand-container">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div>
+      <div class="masthead-wordmark">Paul <em>McLear</em></div>
+      <div class="section-label" style="margin-top:12px; margin-bottom:0;">Personal Brand System · v1.0</div>
+    </div>
+    <div class="masthead-meta">
+      <div class="masthead-role">
+        Director, Innovation Lab<br>
+        Financial Crime · RegTech · AI<br>
+        Plenitude · London
+      </div>
+      <div class="brand-badge">brand system active</div>
+    </div>
+  </div>
+
+  <!-- COLOURS -->
+  <section>
+    <div class="section-label">Colour Palette</div>
+
+    <div class="palette-grid">
+
+      <!-- Canopy -->
+      <div class="palette-group">
+        <div class="palette-group-label">Canopy — Nature Greens</div>
+        <div class="swatch-stack">
+          <div class="swatch" style="background:#142b1a;color:#6aaa7a;"><span class="swatch-name">900</span><span class="swatch-hex">#142b1a</span></div>
+          <div class="swatch" style="background:#2a5736;color:#90c49e;"><span class="swatch-name">700</span><span class="swatch-hex">#2a5736</span></div>
+          <div class="swatch" style="background:#4d8c5e;color:#fff;"><span class="swatch-name">500 ★</span><span class="swatch-hex">#4d8c5e</span></div>
+          <div class="swatch" style="background:#90c49e;color:#1e4028;"><span class="swatch-name">300</span><span class="swatch-hex">#90c49e</span></div>
+          <div class="swatch" style="background:#f0f9f3;color:#2a5736;"><span class="swatch-name">50</span><span class="swatch-hex">#f0f9f3</span></div>
+        </div>
+      </div>
+
+      <!-- Birch -->
+      <div class="palette-group">
+        <div class="palette-group-label">Birch — Warm Neutrals</div>
+        <div class="swatch-stack">
+          <div class="swatch" style="background:#1a1512;color:#c4b8ae;"><span class="swatch-name">950</span><span class="swatch-hex">#1a1512</span></div>
+          <div class="swatch" style="background:#4a3f37;color:#d8cfc9;"><span class="swatch-name">800</span><span class="swatch-hex">#4a3f37</span></div>
+          <div class="swatch" style="background:#aa9b8e;color:#fff;"><span class="swatch-name">500</span><span class="swatch-hex">#aa9b8e</span></div>
+          <div class="swatch" style="background:#ece8e4;color:#4a3f37;"><span class="swatch-name">200</span><span class="swatch-hex">#ece8e4</span></div>
+          <div class="swatch" style="background:#faf9f7;color:#6b5c51;"><span class="swatch-name">50</span><span class="swatch-hex">#faf9f7</span></div>
+        </div>
+      </div>
+
+      <!-- Slate -->
+      <div class="palette-group">
+        <div class="palette-group-label">Slate — Navy Depth</div>
+        <div class="swatch-stack">
+          <div class="swatch" style="background:#0d1929;color:#7b9dc8;"><span class="swatch-name">900</span><span class="swatch-hex">#0d1929</span></div>
+          <div class="swatch" style="background:#274069;color:#b0c5df;"><span class="swatch-name">600</span><span class="swatch-hex">#274069</span></div>
+          <div class="swatch" style="background:#4a72a8;color:#fff;"><span class="swatch-name">400 ★</span><span class="swatch-hex">#4a72a8</span></div>
+          <div class="swatch" style="background:#b0c5df;color:#162338;"><span class="swatch-name">200</span><span class="swatch-hex">#b0c5df</span></div>
+          <div class="swatch" style="background:#eef4fa;color:#274069;"><span class="swatch-name">50</span><span class="swatch-hex">#eef4fa</span></div>
+        </div>
+      </div>
+
+      <!-- Tortoise + Claude -->
+      <div class="palette-group">
+        <div class="palette-group-label">Tortoise & Claude Accents</div>
+        <div class="swatch-stack">
+          <div class="swatch" style="background:#4a2c0a;color:#e4c898;"><span class="swatch-name">tortoise-700</span><span class="swatch-hex">#4a2c0a</span></div>
+          <div class="swatch" style="background:#8c5a1e;color:#fff;"><span class="swatch-name">tortoise-500 ★</span><span class="swatch-hex">#8c5a1e</span></div>
+          <div class="swatch" style="background:#e4c898;color:#4a2c0a;"><span class="swatch-name">tortoise-200</span><span class="swatch-hex">#e4c898</span></div>
+          <div class="swatch" style="background:#c25840;color:#fff;"><span class="swatch-name">claude-600</span><span class="swatch-hex">#c25840</span></div>
+          <div class="swatch" style="background:#fceae6;color:#c25840;"><span class="swatch-name">claude-100</span><span class="swatch-hex">#fceae6</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section>
+    <div class="section-label">Typography</div>
+    <div class="type-specimens">
+
+      <div class="type-specimen">
+        <div class="type-meta">DISPLAY · Playfair Display 600 · Headers, hero text, KPI values</div>
+        <div class="t-display">Financial Crime Intelligence</div>
+        <div class="t-display-italic" style="margin-top:8px;">Structure from ambiguity.</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">HEADING · Libre Baskerville 700 · Section titles, card heads</div>
+        <div class="t-heading">AI Governance Framework · RegTech Strategy</div>
+      </div>
+
+      <div class="type-specimen">
+        <div class="type-meta">BODY · Libre Baskerville 400 · Long-form prose</div>
+        <div class="t-body">Nineteen years across retail, corporate, and investment banking has produced a particular kind of knowledge: the ability to impose structure on systems that resist it. At Plenitude, that translates to AI-enabled financial crime transformation.</div>
+      </div>
+
+      <div class="type-specimen" style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:flex-start;">
+        <div>
+          <div class="type-meta">UI · DM Sans 400/500 · Interface, labels</div>
+          <div class="t-ui">Dashboard · Analytics · Workspace</div>
+          <div style="margin-top:6px;"><span class="t-subheading">Section Heading Style</span></div>
+        </div>
+        <div>
+          <div class="type-meta">MONO · DM Mono · Code, tokens, metadata</div>
+          <div class="t-mono">--canopy-500: #4d8c5e</div>
+          <div style="margin-top:8px;"><span class="t-label">Status Label</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section>
+    <div class="section-label">Components</div>
+    <div class="component-grid">
+
+      <!-- Buttons -->
+      <div class="component-card">
+        <h4>Buttons</h4>
+        <div class="btn-row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-accent">Accent</button>
+          <button class="btn btn-ghost">Ghost</button>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div class="component-card">
+        <h4>Tags &amp; Status Chips</h4>
+        <div class="tag-row">
+          <span class="tag tag-green">AI Governance</span>
+          <span class="tag tag-slate">RegTech</span>
+          <span class="tag tag-tortoise">Financial Crime</span>
+          <span class="tag tag-claude">In Progress</span>
+          <span class="tag tag-neutral">Archive</span>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="component-card">
+        <h4>Stat Cards</h4>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-value">19</div>
+            <div class="stat-label">Years in FS</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">31</div>
+            <div class="stat-label">Active Projects</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">3</div>
+            <div class="stat-label">Core Products</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">5</div>
+            <div class="stat-label">Agent Pipeline</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <div class="component-card">
+        <h4>Progress Indicators</h4>
+        <div class="progress-list">
+          <div class="progress-item">
+            <label><span>Project Aura</span><span>72%</span></label>
+            <div class="progress-track"><div class="progress-fill" style="width:72%;background:var(--canopy-500);"></div></div>
+          </div>
+          <div class="progress-item">
+            <label><span>Sales Agent Build</span><span>48%</span></label>
+            <div class="progress-track"><div class="progress-fill" style="width:48%;background:var(--slate-400);"></div></div>
+          </div>
+          <div class="progress-item">
+            <label><span>RegSight SaaS</span><span>85%</span></label>
+            <div class="progress-track"><div class="progress-fill" style="width:85%;background:var(--tortoise-400);"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Callouts -->
+      <div class="component-card" style="grid-column: 1 / -1;">
+        <h4>Callouts &amp; Alerts</h4>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);">
+          <div class="callout callout-info">
+            <span class="callout-icon">◈</span>
+            <span><strong>Insight:</strong> Vector database chunking strategy should be revisited before Aura goes to production — 512-token chunks may be insufficient for regulatory text.</span>
+          </div>
+          <div class="callout callout-warning">
+            <span class="callout-icon">△</span>
+            <span><strong>Flag:</strong> CRM data quality is a known risk in the sales agent architecture. Validate before enabling proactive outreach path.</span>
+          </div>
+          <div class="callout callout-action">
+            <span class="callout-icon">→</span>
+            <span><strong>Action:</strong> Circulate board-level reporting by Friday. Confirm Compass country-risk methodology aligns with Baker McKenzie requirements.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nav -->
+      <div class="component-card" style="grid-column: 1 / -1;">
+        <h4>Navigation Strip — Dark</h4>
+        <div class="nav-strip">
+          <button class="nav-item active">Overview</button>
+          <button class="nav-item">Projects</button>
+          <button class="nav-item">Intelligence</button>
+          <button class="nav-item">Agents</button>
+          <button class="nav-item">Board</button>
+          <div class="nav-spacer"></div>
+          <div class="nav-avatar">PS</div>
+        </div>
+      </div>
+
+      <!-- Dark KPI demo -->
+      <div class="component-card dark-demo">
+        <h4>Dashboard KPI Strip — Dark Surface</h4>
+        <div class="dark-kpi-row">
+          <div class="dark-kpi">
+            <div class="dark-kpi-value">£2.4<span>m</span></div>
+            <div class="dark-kpi-label">Pipeline Value</div>
+            <div class="dark-kpi-delta delta-up">↑ +12% QoQ</div>
+          </div>
+          <div class="dark-kpi">
+            <div class="dark-kpi-value">94<span>%</span></div>
+            <div class="dark-kpi-label">Client Retention</div>
+            <div class="dark-kpi-delta delta-up">↑ Stable</div>
+          </div>
+          <div class="dark-kpi">
+            <div class="dark-kpi-value">7<span>d</span></div>
+            <div class="dark-kpi-label">Avg. Response Time</div>
+            <div class="dark-kpi-delta delta-down">↓ -2d from target</div>
+          </div>
+          <div class="dark-kpi">
+            <div class="dark-kpi-value">31<span></span></div>
+            <div class="dark-kpi-label">Open Workstreams</div>
+            <div class="dark-kpi-delta">→ No change</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MOTIFS -->
+  <section>
+    <div class="section-label">Icon Motifs &amp; Mark Treatments</div>
+    <div class="motif-row">
+      <div>
+        <div class="motif-mark" style="background:var(--canopy-900);">
+          <span style="font-family:var(--font-display);font-size:26px;color:var(--canopy-300);font-weight:600;">PS</span>
+        </div>
+        <div class="space-label" style="margin-top:6px;">Primary · Dark</div>
+      </div>
+      <div>
+        <div class="motif-mark" style="background:var(--canopy-100);border:1.5px solid var(--canopy-300);">
+          <span style="font-family:var(--font-display);font-size:26px;color:var(--canopy-800);font-weight:600;font-style:italic;">PS</span>
+        </div>
+        <div class="space-label" style="margin-top:6px;">Secondary · Light</div>
+      </div>
+      <div>
+        <div class="motif-mark" style="background:var(--tortoise-500);">
+          <span style="font-family:var(--font-display);font-size:26px;color:#fff;font-weight:600;">PS</span>
+        </div>
+        <div class="space-label" style="margin-top:6px;">Accent · Tortoise</div>
+      </div>
+      <div>
+        <div class="motif-mark" style="background:var(--slate-800);">
+          <span style="font-family:var(--font-display);font-size:26px;color:var(--slate-200);font-weight:600;">PS</span>
+        </div>
+        <div class="space-label" style="margin-top:6px;">Tertiary · Slate</div>
+      </div>
+      <div style="flex:1;min-width:160px;">
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:8px;">Usage rule</div>
+        <div style="font-family:var(--font-ui);font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          Dark on dark surfaces. Light on elevated cards. Tortoise as a high-attention accent only. Slate for navigation and structural chrome.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CSS TOKENS EXPORT -->
+  <section>
+    <div class="section-label">CSS Custom Properties — Copy-ready</div>
+    <div style="background:var(--canopy-950);border-radius:var(--radius-lg);padding:var(--space-6);overflow-x:auto;">
+      <pre style="font-family:var(--font-mono);font-size:12px;color:var(--canopy-200);line-height:1.8;white-space:pre-wrap;">:root {
+  /* Canopy — Nature Greens */
+  --canopy-900: #142b1a;   --canopy-700: #2a5736;
+  --canopy-500: #4d8c5e;   --canopy-300: #90c49e;
+  --canopy-100: #ddf0e4;   --canopy-50:  #f0f9f3;
+
+  /* Birch — Warm Neutrals */
+  --birch-950: #1a1512;    --birch-800: #4a3f37;
+  --birch-500: #aa9b8e;    --birch-200: #ece8e4;
+  --birch-50:  #faf9f7;
+
+  /* Slate — Navy Depth */
+  --slate-900: #0d1929;    --slate-600: #274069;
+  --slate-400: #4a72a8;    --slate-100: #d8e5f0;
+
+  /* Tortoise — Warm Accent */
+  --tortoise-700: #4a2c0a; --tortoise-500: #8c5a1e;
+  --tortoise-200: #e4c898;
+
+  /* Claude Coral — Action Accent */
+  --claude-600: #c25840;   --claude-400: #e88870;
+  --claude-100: #fceae6;
+
+  /* Semantic */
+  --bg-base: #faf9f7;          --bg-surface: #ffffff;
+  --text-primary: #1a1512;     --text-secondary: #6b5c51;
+  --text-muted: #aa9b8e;       --text-accent: #3a7049;
+  --accent-primary: #4d8c5e;   --accent-secondary: #8c5a1e;
+  --accent-action: #c25840;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Libre Baskerville', Georgia, serif;
+  --font-ui:      'DM Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+}</pre>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="brand-footer">
+    <p>Paul McLear — Personal Brand System · v1.0 · May 2026</p>
+    <p>Refined Naturalist · Canopy × Birch × Slate</p>
+  </div>
+
+</div>
+</body>
+</html>

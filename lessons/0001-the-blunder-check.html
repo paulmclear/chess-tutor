@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1 · The Blunder-Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* Paul — Brand System · Refined Naturalist (Canopy × Birch × Slate × Tortoise) */
+  :root{
+    --canopy-950:#0c1a10; --canopy-900:#142b1a; --canopy-800:#1e4028; --canopy-700:#2a5736;
+    --canopy-600:#3a7049; --canopy-500:#4d8c5e; --canopy-400:#6aaa7a; --canopy-300:#90c49e;
+    --canopy-200:#bcddc7; --canopy-100:#ddf0e4; --canopy-50:#f0f9f3;
+    --birch-950:#1a1512; --birch-900:#2d2620; --birch-800:#4a3f37; --birch-700:#6b5c51;
+    --birch-600:#8c7b6e; --birch-500:#aa9b8e; --birch-300:#d8cfc9; --birch-200:#ece8e4;
+    --birch-100:#f5f3f0; --birch-50:#faf9f7;
+    --slate-900:#0d1929; --slate-800:#162338; --slate-700:#1e3150; --slate-600:#274069;
+    --slate-500:#2f5082; --slate-400:#4a72a8; --slate-200:#b0c5df; --slate-100:#d8e5f0;
+    --tortoise-700:#4a2c0a; --tortoise-600:#6b4012; --tortoise-500:#8c5a1e; --tortoise-400:#b07830;
+    --tortoise-200:#e4c898; --tortoise-100:#f5e8cc;
+    --claude-600:#c25840; --claude-500:#d96b52; --claude-400:#e88870; --claude-100:#fceae6;
+
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-body:'Libre Baskerville',Georgia,serif;
+    --font-ui:'DM Sans',sans-serif;
+    --font-mono:'DM Mono','Courier New',monospace;
+
+    --link:var(--canopy-700); --good:var(--canopy-500); --bad:var(--claude-600);
+    --sq-light:#e7f0e9; --sq-dark:#3a7049; /* Canopy-tinted board */
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%; text-size-adjust:100%}
+  body{
+    font-family:var(--font-ui); color:var(--birch-950); margin:0;
+    background:var(--birch-50); line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px 96px}
+
+  /* Header */
+  header{
+    background:linear-gradient(140deg,var(--canopy-900) 0%,var(--canopy-800) 55%,var(--slate-800) 130%);
+    color:var(--canopy-50); padding:56px 24px 48px;
+  }
+  header .inner{max-width:820px; margin:0 auto}
+  .kicker{
+    font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.16em;
+    font-size:11px; font-weight:500; color:var(--canopy-300); margin:0 0 14px;
+  }
+  header h1{font-family:var(--font-display); font-size:46px; line-height:1.05; font-weight:600; letter-spacing:-.02em; margin:0 0 14px}
+  header h1 em{font-style:italic; font-weight:400; color:var(--canopy-300)}
+  header p.sub{font-family:var(--font-body); font-size:18px; color:#d4e6d9; max-width:600px; margin:0; font-style:italic}
+  .meta{margin-top:24px; display:flex; gap:10px; flex-wrap:wrap}
+  .pill{
+    font-family:var(--font-mono); background:rgba(255,255,255,.08); border:1px solid rgba(144,196,158,.3);
+    color:var(--canopy-100); font-size:11.5px; letter-spacing:.03em; padding:5px 12px; border-radius:999px;
+  }
+
+  h2{font-family:var(--font-display); font-size:28px; font-weight:600; color:var(--canopy-900); margin:48px 0 6px; letter-spacing:-.01em}
+  h2 .num{color:var(--tortoise-500); font-style:italic; margin-right:12px}
+  h3{font-family:var(--font-body); font-size:18px; font-weight:700; color:var(--canopy-900); margin:26px 0 8px; line-height:1.4}
+  p{margin:12px 0}
+  .lead, p.body, .why p, li, .step-sub{font-family:var(--font-body)}
+  a{color:var(--link); text-decoration:none; border-bottom:1px solid var(--canopy-300)}
+  a:hover{color:var(--tortoise-500); border-bottom-color:var(--tortoise-400)}
+  strong{font-weight:700; color:var(--canopy-900)}
+  .lead{font-size:18px; color:var(--birch-800); font-style:italic}
+
+  /* Callout */
+  .why{
+    background:var(--canopy-50); border-left:3px solid var(--canopy-500);
+    border-radius:0 8px 8px 0; padding:18px 22px; margin:24px 0;
+  }
+  .why .tag{font-family:var(--font-mono); font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:.1em; color:var(--canopy-600); margin:0 0 6px}
+  .why p{margin:6px 0; color:var(--canopy-900)}
+
+  /* Steps */
+  .steps{counter-reset:step; margin:18px 0; padding:0; list-style:none}
+  .steps li{
+    position:relative; background:#fff; border:1px solid var(--birch-200); border-radius:14px;
+    padding:18px 20px 18px 66px; margin:12px 0; box-shadow:0 1px 3px rgba(12,26,16,.06);
+  }
+  .steps li::before{
+    counter-increment:step; content:counter(step);
+    position:absolute; left:16px; top:16px; width:36px; height:36px;
+    background:var(--canopy-700); color:var(--canopy-50); border-radius:10px;
+    display:grid; place-items:center; font-family:var(--font-display); font-weight:600; font-size:18px;
+  }
+  .steps li b{display:block; font-family:var(--font-body); font-size:16.5px; font-weight:700; color:var(--canopy-900); margin-bottom:3px}
+  .steps li span{color:var(--birch-700); font-size:15px}
+  .mnemonic{font-family:var(--font-display); font-style:italic; font-size:18px; color:var(--tortoise-600)}
+
+  /* Puzzle */
+  .puzzle{
+    background:#fff; border:1px solid var(--birch-200); border-radius:16px;
+    padding:24px; margin:26px 0; box-shadow:0 4px 12px rgba(12,26,16,.08);
+  }
+  .puzzle .ptag{
+    display:inline-block; font-family:var(--font-mono); background:var(--canopy-100); color:var(--canopy-700);
+    font-size:11px; text-transform:uppercase; letter-spacing:.08em; padding:4px 11px; border-radius:999px; margin-bottom:10px;
+  }
+  .puzzle h3{margin-top:4px}
+  .hint{margin-top:0; font-family:var(--font-body); font-size:14.5px; color:var(--birch-600); font-style:italic}
+  .layout{display:flex; gap:26px; flex-wrap:wrap; align-items:flex-start}
+  .boardcol{flex:0 0 auto}
+  .qcol{flex:1 1 280px; min-width:260px}
+
+  /* Board */
+  .board{
+    --sq:42px; --lab:18px;
+    display:grid; grid-template-columns:var(--lab) repeat(8,var(--sq)); grid-template-rows:repeat(8,var(--sq)) var(--lab);
+    border:3px solid var(--canopy-900); border-radius:6px; overflow:hidden; background:var(--canopy-900);
+    user-select:none; max-width:100%;
+  }
+  .sq{display:grid; place-items:center; font-size:calc(var(--sq)*.74); line-height:1; position:relative}
+  .sq.light{background:var(--sq-light)} .sq.dark{background:var(--sq-dark)}
+  .pc{filter:drop-shadow(0 1px 0 rgba(0,0,0,.2))}
+  .pc.w{color:#fbfcfb; -webkit-text-stroke:1.4px var(--canopy-950); text-stroke:1.4px var(--canopy-950)}
+  .pc.b{color:var(--canopy-950); -webkit-text-stroke:1.4px #000}
+  .rlab,.flab{display:grid; place-items:center; font-family:var(--font-mono); font-size:10px; font-weight:500; color:var(--birch-600); background:var(--birch-100)}
+  .corner{background:var(--birch-100)}
+
+  /* Options */
+  .opts{margin:8px 0 0; display:flex; flex-direction:column; gap:10px}
+  .opt{
+    text-align:left; font-family:var(--font-ui); font-size:14.5px; font-weight:400; color:var(--birch-950);
+    background:#fff; border:1.5px solid var(--birch-300); border-radius:10px; padding:12px 14px;
+    cursor:pointer; transition:.14s; line-height:1.45;
+  }
+  .opt:hover{border-color:var(--canopy-400); background:var(--canopy-50)}
+  .opt.correct{border-color:var(--good); background:var(--canopy-50); color:var(--canopy-800); font-weight:500}
+  .opt.wrong{border-color:var(--bad); background:var(--claude-100); color:var(--claude-600)}
+  .opt:disabled{cursor:default}
+  .opt b{color:inherit; font-weight:700}
+  .feedback{margin-top:14px; padding:14px 16px; border-radius:10px; font-family:var(--font-body); font-size:14.5px; line-height:1.55; display:none}
+  .feedback.show{display:block}
+  .feedback.ok{background:var(--canopy-50); border:1px solid var(--canopy-400); color:var(--canopy-900)}
+  .feedback.no{background:var(--claude-100); border:1px solid var(--claude-400); color:var(--tortoise-700)}
+
+  .scoreline{font-family:var(--font-mono); font-size:13px; color:var(--birch-600); margin-top:6px}
+
+  /* Teacher */
+  .teacher{margin-top:48px; background:var(--canopy-900); color:var(--canopy-100); border-radius:18px; padding:28px 30px}
+  .teacher h3{font-family:var(--font-display); font-weight:600; color:var(--canopy-50); margin-top:0; font-size:21px}
+  .teacher p{font-family:var(--font-body)}
+  .teacher a{color:var(--canopy-300); border-bottom-color:rgba(144,196,158,.4)}
+  .teacher a:hover{color:var(--tortoise-200); border-bottom-color:var(--tortoise-200)}
+  .teacher code{font-family:var(--font-mono); background:rgba(255,255,255,.1); padding:2px 7px; border-radius:6px; font-size:13px}
+  .next{font-size:14.5px; color:var(--canopy-200)}
+
+  footer.brand{font-family:var(--font-mono); text-align:center; color:var(--birch-500); font-size:11px; letter-spacing:.04em; margin-top:40px}
+  .src{font-family:var(--font-body); font-size:14px; color:var(--birch-700)}
+  ul{font-family:var(--font-body)}
+
+  /* Mobile / iOS */
+  @media (max-width:600px){
+    header{padding:42px 20px 36px}
+    header h1{font-size:34px}
+    header p.sub{font-size:16.5px}
+    .meta{margin-top:18px}
+    .wrap{padding:0 16px 76px}
+    h2{font-size:24px; margin-top:40px}
+    h3{font-size:17px}
+    .lead{font-size:16.5px}
+    .steps li{padding:16px 16px 16px 60px}
+    .steps li::before{left:14px; top:14px}
+    .puzzle{padding:18px 15px; border-radius:14px}
+    .layout{gap:18px}
+    .boardcol{width:100%; display:flex; justify-content:center}
+    .board{--sq:calc((100vw - 100px)/8); --lab:15px}
+    .qcol{flex-basis:100%; min-width:0}
+    .teacher{padding:24px 20px}
+  }
+  @media (max-width:360px){
+    header h1{font-size:29px}
+    .board{--sq:calc((100vw - 92px)/8); --lab:13px}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <p class="kicker">Chess · Lesson 01 · Foundations</p>
+    <h1>The <em>Blunder-Check</em></h1>
+    <p class="sub">The thirty-second habit that wins more games at your level than any opening ever will.</p>
+    <div class="meta">
+      <span class="pill">⏱ One sitting · ~20 min</span>
+      <span class="pill">🎯 Mission: 800 → 1200</span>
+      <span class="pill">♟ For classical games</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <p class="lead">You asked about openings and middlegame theory — and we'll get there.
+  But first, the uncomfortable, evidence-backed truth about your rating.</p>
+
+  <div class="why">
+    <p class="tag">Why this lesson, first</p>
+    <p>Below ~1300, <strong>almost every decisive game is decided by a one-move blunder</strong> —
+    a piece left hanging, or a missed capture/mate. Not by opening knowledge.
+    Coaches and trainers are unanimous
+    (<a href="https://chesstournamentguide.com/improve/best-training-plan-under-1000/" target="_blank">Chess Tournament Guide, "Training Plan Under 1000"</a>;
+    <a href="https://www.chessable.com/blog/beginner-opening-theory/" target="_blank">Chessable, "Opening Theory for Beginners"</a>).</p>
+    <p>You play <strong>classical / long time controls</strong>. That is your superpower:
+    you have the clock to run a simple checklist every move. Most 800-rated players lose not
+    because they <em>can't</em> see the threat — but because they <em>never looked</em>.
+    This lesson installs the looking.</p>
+  </div>
+
+  <h2><span class="num">1</span>The four-step scan</h2>
+  <p class="body">Before <em>every</em> move, run this. It takes seconds once it's a habit. IM John
+  Bartholomew calls the underlying idea building a <strong>"sense of danger"</strong> by actively
+  scanning for loose pieces
+  (<a href="https://lichess.org/video/Ao9iOeK_jvU" target="_blank">Chess Fundamentals #1: Undefended Pieces</a>).</p>
+
+  <ol class="steps">
+    <li><b>What did my opponent's last move do?</b>
+        <span>Their move always has a point. Does it attack one of my pieces, threaten a capture, or set up a check/mate? Find the point before you do anything else.</span></li>
+    <li><b>Scan for loose pieces — both sides.</b>
+        <span>Sweep the board: is any piece (mine or theirs) <em>attacked and not defended enough</em>? Loose pieces drop. Theirs are free material for me; mine are emergencies.</span></li>
+    <li><b>Now pick my move — then re-check it.</b>
+        <span>Imagine the move played. <em>Does it leave anything of mine hanging? Does it walk into a check or fork?</em> This single re-check kills most blunders.</span></li>
+    <li><b>Look at all checks &amp; captures.</b>
+        <span>Every check and every capture — mine and theirs. Forcing moves are where tactics live. If you only ever scan these, you'll already outplay most of your bracket.</span></li>
+  </ol>
+  <p class="body">Shorthand to mutter to yourself each move:<br>
+  <span class="mnemonic">“What's their threat? · What's loose? · Does my move hang anything? · Checks &amp; captures?”</span></p>
+
+  <h2><span class="num">2</span>Train it — three positions</h2>
+  <p class="body">Reading the checklist does nothing. <strong>Running it does.</strong> For each position below,
+  decide your answer <em>before</em> you click — then get instant feedback. Boards are shown
+  from White's side (rank 1 at the bottom).</p>
+
+  <!-- PUZZLE 1 -->
+  <div class="puzzle" id="p1">
+    <span class="ptag">Puzzle 1 · Step 2 — loose pieces</span>
+    <h3>It's <u>White to move</u>. Is there free material to grab?</h3>
+    <div class="layout">
+      <div class="boardcol"><div class="board" data-pos="p1"></div></div>
+      <div class="qcol">
+        <p class="hint">Scan Black's pieces. Is anything attacked and undefended?</p>
+        <div class="opts" data-q="1">
+          <button class="opt" data-correct="false">No — material is equal, just develop a piece.</button>
+          <button class="opt" data-correct="true">Yes — play <b>d4xe5</b>, the knight is hanging.</button>
+          <button class="opt" data-correct="false">Yes — but I should play Bxf7+ first.</button>
+        </div>
+        <div class="feedback" data-fb="1"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUZZLE 2 -->
+  <div class="puzzle" id="p2">
+    <span class="ptag">Puzzle 2 · Step 1 — their threat</span>
+    <h3>Black has just played <b>…Bg4</b>. It's <u>White to move</u>. What is the threat?</h3>
+    <div class="layout">
+      <div class="boardcol"><div class="board" data-pos="p2"></div></div>
+      <div class="qcol">
+        <p class="hint">Ask the Step 1 question: what does that bishop move <em>do?</em></p>
+        <div class="opts" data-q="2">
+          <button class="opt" data-correct="false">Nothing real — I can develop normally.</button>
+          <button class="opt" data-correct="false">It threatens …Bxf2+ winning a pawn.</button>
+          <button class="opt" data-correct="true">It threatens <b>…Bxd1</b> — my queen is undefended! Save it (move the queen, or play f3 hitting the bishop).</button>
+        </div>
+        <div class="feedback" data-fb="2"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PUZZLE 3 -->
+  <div class="puzzle" id="p3">
+    <span class="ptag">Puzzle 3 · Step 3 — check your own move</span>
+    <h3>You're tempted to play <b>Bxf7+</b> ("a check, and I grab a pawn!"). <u>Good move?</u></h3>
+    <div class="layout">
+      <div class="boardcol"><div class="board" data-pos="p3"></div></div>
+      <div class="qcol">
+        <p class="hint">Before you commit: <em>what defends f7?</em> Calculate the recapture.</p>
+        <div class="opts" data-q="3">
+          <button class="opt" data-correct="false">Yes — a free pawn with check is always good.</button>
+          <button class="opt" data-correct="true">No — f7 is guarded by the king <i>and</i> rook. After …Rxf7 I've given a bishop for a pawn.</button>
+          <button class="opt" data-correct="false">Yes — after Kxf7 I win the queen.</button>
+        </div>
+        <div class="feedback" data-fb="3"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="scoreline" id="score">Answer the three puzzles above.</p>
+
+  <h2><span class="num">3</span>Your reps this week</h2>
+  <p class="body">Knowledge fades; <strong>habits stick through reps.</strong> In your 1–3 hours:</p>
+  <ul>
+    <li><strong>Every game, every move:</strong> run the four-step scan. Slowly and deliberately —
+    you have the clock. It will feel laborious for ~10 games, then it goes automatic.</li>
+    <li><strong>10–15 puzzles, a few times this week</strong> on
+    <a href="https://lichess.org/training" target="_blank">Lichess Puzzles</a> (free, unlimited).
+    Don't rush — the goal is <em>seeing</em>, not speed.</li>
+    <li><strong>After each loss, find the move it turned on.</strong> 90% of the time it'll be a
+    hanging piece or a missed capture — exactly what this scan catches. That's the proof.</li>
+  </ul>
+  <p class="src">Tools &amp; sources curated in <code>RESOURCES.md</code>. Want to go deeper on the
+  "sense of danger" idea? Watch
+  <a href="https://lichess.org/video/Ao9iOeK_jvU" target="_blank">Bartholomew's "Undefended Pieces"</a> (free, ~20 min).</p>
+
+  <div class="teacher">
+    <h3>I'm your teacher — ask me anything</h3>
+    <p>Stuck on a position? Lost a game and can't see where it went wrong? Paste the moves
+    (or describe it) back in the terminal and I'll walk through it with you. That's how this works.</p>
+    <p class="next"><b>Next lesson preview:</b> the five tactical patterns that win material on
+    purpose — fork, pin, skewer, discovered attack, and the back-rank mate. Once you stop
+    <em>giving away</em> pieces (this lesson), we start <em>taking</em> them. Say the word when you're ready.</p>
+  </div>
+
+  <footer class="brand">Paul McLear · learning workspace · Lesson 0001 · Refined Naturalist</footer>
+</div>
+
+<script>
+  const GLYPH={k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+  // Positions: square -> piece. Uppercase = White, lowercase = Black.
+  const POS={
+    // P1: White to move, d4xe5 wins the undefended knight on e5.
+    p1:{a1:'R',e1:'Q',g1:'K',f1:'B',a2:'P',b2:'P',c2:'P',d4:'P',f2:'P',g2:'P',h2:'P',
+        a8:'r',c8:'b',g8:'k',f8:'r',e5:'n',a7:'p',b7:'p',c7:'p',f7:'p',g7:'p',h7:'p'},
+    // P2: Black just played ...Bg4; bishop on g4 attacks White Q on d1 (e2 & f3 empty).
+    // Rook on h1 (blocked by Kg1) so nothing defends d1 -> queen is genuinely loose.
+    p2:{g1:'K',d1:'Q',h1:'R',f4:'B',a2:'P',b2:'P',c2:'P',e4:'P',f2:'P',g2:'P',h2:'P',
+        g8:'k',a8:'r',f6:'n',g4:'b',a7:'p',b7:'p',c7:'p',e6:'p',f7:'p',g7:'p',h7:'p'},
+    // P3: Bxf7+?? f7 defended by Kg8 and Rf8 -> loses bishop for a pawn.
+    p3:{g1:'K',c4:'B',d1:'Q',f1:'R',a2:'P',b2:'P',c2:'P',e4:'P',f2:'P',g2:'P',h2:'P',
+        g8:'k',f8:'r',f6:'n',f7:'p',a7:'p',b7:'p',c7:'p',g7:'p',h7:'p'}
+  };
+  const FILES=['a','b','c','d','e','f','g','h'];
+  function build(el,pos){
+    let html='';
+    for(let r=8;r>=1;r--){
+      html+=`<div class="rlab">${r}</div>`;
+      for(let f=0;f<8;f++){
+        const sq=FILES[f]+r;
+        const dark=((f+r)%2===1);
+        const pc=pos[sq];
+        let inner='';
+        if(pc){const isW=pc===pc.toUpperCase();inner=`<span class="pc ${isW?'w':'b'}">${GLYPH[pc.toLowerCase()]}</span>`;}
+        html+=`<div class="sq ${dark?'dark':'light'}">${inner}</div>`;
+      }
+    }
+    html+=`<div class="corner"></div>`;
+    for(let f=0;f<8;f++) html+=`<div class="flab">${FILES[f]}</div>`;
+    el.innerHTML=html;
+  }
+  document.querySelectorAll('.board').forEach(b=>build(b,POS[b.dataset.pos]));
+
+  const FB={
+    1:{ok:"Correct. Black's knight on e5 is attacked by your d4-pawn and <b>nothing defends it</b> — d4xe5 just wins a whole knight. That's Step 2 (loose pieces) paying off. Bxf7+ here would be a blunder: f7 is defended.",
+        no:"Not quite. Look again with Step 2: the knight on e5 is attacked by your d4-pawn and no Black piece defends it. <b>d4xe5 wins a free knight.</b> Equal material only if you don't look."},
+    2:{ok:"Exactly. The bishop on g4 stares straight down the diagonal to d1 — and <b>nothing defends your queen.</b> If you 'develop normally' you lose it to …Bxd1. This is Step 1: every opponent move has a point — find it. Save the queen, or play <b>f3</b> to both block the diagonal and attack the bishop.",
+        no:"Look harder with Step 1. The g4-bishop's diagonal runs g4–f3–e2–<b>d1</b>, and both f3 and e2 are empty — it's attacking your undefended queen. The threat is <b>…Bxd1</b>. Ignore it and you drop the queen for nothing."},
+    3:{ok:"Right — and this is the habit that saves you. f7 is defended by the king <i>and</i> the rook on f8. After Bxf7+ Rxf7 you've traded a <b>bishop (3) for a pawn (1)</b> with no follow-up. Step 3: always calculate the recapture before you commit a 'free' capture.",
+        no:"This is the classic 800-level trap. 'Check + grabs a pawn' <i>feels</i> good, but f7 is guarded by the king and the rook. After Bxf7+ <b>…Rxf7</b> (or Kxf7) you've simply lost a bishop for a pawn. Step 3 — calculate the recapture — catches this every time."}
+  };
+  let answered={}, total=3;
+  document.querySelectorAll('.opts').forEach(group=>{
+    const q=group.dataset.q;
+    group.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(answered[q]!==undefined) return;
+        const correct=btn.dataset.correct==='true';
+        answered[q]=correct;
+        group.querySelectorAll('.opt').forEach(b=>{
+          b.disabled=true;
+          if(b.dataset.correct==='true') b.classList.add('correct');
+        });
+        if(!correct) btn.classList.add('wrong');
+        const fb=document.querySelector(`[data-fb="${q}"]`);
+        fb.className='feedback show '+(correct?'ok':'no');
+        fb.innerHTML=correct?FB[q].ok:FB[q].no;
+        updateScore();
+      });
+    });
+  });
+  function updateScore(){
+    const done=Object.keys(answered).length;
+    const right=Object.values(answered).filter(Boolean).length;
+    const el=document.getElementById('score');
+    if(done<total){el.textContent=`${done} of ${total} answered — keep going.`;return;}
+    if(right===total) el.innerHTML=`<b style="color:var(--good)">3 / 3 — the scan works.</b> Now make it a reflex: run it on every move this week.`;
+    else el.innerHTML=`<b>${right} / 3.</b> Re-read the feedback on any you missed — that miss <i>is</i> the lesson. The scan would have caught it.`;
+  }
+</script>
+</body>
+</html>
