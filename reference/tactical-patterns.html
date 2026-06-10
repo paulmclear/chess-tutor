@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference · Tactical Patterns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canopy-950:#0c1a10; --canopy-900:#142b1a; --canopy-800:#1e4028; --canopy-700:#2a5736;
+    --canopy-600:#3a7049; --canopy-500:#4d8c5e; --canopy-300:#90c49e; --canopy-100:#ddf0e4; --canopy-50:#f0f9f3;
+    --birch-950:#1a1512; --birch-700:#6b5c51; --birch-500:#aa9b8e; --birch-200:#ece8e4; --birch-100:#f5f3f0; --birch-50:#faf9f7;
+    --slate-800:#162338;
+    --tortoise-600:#6b4012; --tortoise-500:#8c5a1e; --tortoise-400:#b07830; --tortoise-100:#f5e8cc;
+    --font-display:'Playfair Display',Georgia,serif;
+    --font-body:'Libre Baskerville',Georgia,serif;
+    --font-ui:'DM Sans',sans-serif;
+    --font-mono:'DM Mono',monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:var(--font-ui); color:var(--birch-950); background:var(--birch-200); padding:32px 16px;
+       -webkit-text-size-adjust:100%; text-size-adjust:100%; -webkit-font-smoothing:antialiased}
+  .card{max-width:580px; margin:0 auto; background:#fff; border-radius:18px; overflow:hidden; box-shadow:0 12px 40px rgba(12,26,16,.16)}
+  .top{background:linear-gradient(140deg,var(--canopy-900),var(--slate-800)); color:var(--canopy-50); padding:28px 30px}
+  .top .k{font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.16em; font-size:11px; font-weight:500; color:var(--canopy-300); margin:0 0 8px}
+  .top h1{font-family:var(--font-display); margin:0; font-size:29px; font-weight:600; letter-spacing:-.01em}
+  .top h1 em{font-style:italic; font-weight:400; color:var(--canopy-300)}
+  .top p{font-family:var(--font-body); font-style:italic; margin:8px 0 0; font-size:13.5px; color:#d4e6d9}
+  .body{padding:8px 30px 22px}
+  .pat{display:flex; gap:16px; padding:17px 0; border-bottom:1px solid var(--birch-100)}
+  .pat:last-child{border-bottom:none}
+  .ic{flex:0 0 auto; width:40px; height:40px; border-radius:11px; background:var(--canopy-100); display:grid; place-items:center; font-size:20px}
+  .pat h2{font-family:var(--font-body); color:var(--canopy-900); font-size:16px; font-weight:700; margin:0 0 3px}
+  .pat p{font-family:var(--font-body); color:var(--birch-700); font-size:13.5px; line-height:1.5; margin:0}
+  .pat .tip{color:var(--tortoise-600); font-style:italic}
+  .hunt{margin:14px 30px 0; background:var(--canopy-50); border:1.5px dashed var(--canopy-300); border-radius:12px; padding:14px 18px; font-family:var(--font-body); font-size:13.5px; color:var(--canopy-900); line-height:1.55}
+  .hunt b{color:var(--tortoise-600)}
+  .foot{font-family:var(--font-mono); padding:14px 30px 22px; font-size:10.5px; letter-spacing:.04em; color:var(--birch-500); text-align:center}
+  @media (max-width:480px){
+    body{padding:16px 12px}
+    .top{padding:24px 22px} .top h1{font-size:24px}
+    .body{padding:6px 22px 18px} .hunt{margin-left:22px; margin-right:22px} .foot{padding:14px 22px 20px}
+  }
+  @media print{ body{background:#fff; padding:0} .card{box-shadow:none; border:1px solid var(--birch-200)} @page{margin:14mm} }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">
+    <p class="k">Chess Reference · Card 02</p>
+    <h1>Tactical <em>Patterns</em></h1>
+    <p>The five ways to win material by force. Nearly every tactic is one of these — or a mix.</p>
+  </div>
+  <div class="body">
+    <div class="pat"><div class="ic">♞</div><div>
+      <h2>Fork</h2>
+      <p>One piece attacks two targets at once; the opponent saves one, you take the other.
+      <span class="tip">Knights are the best forkers — a knight check can't be blocked. King + queen = the “royal fork”.</span></p></div></div>
+    <div class="pat"><div class="ic">📌</div><div>
+      <h2>Pin</h2>
+      <p>A piece can't (or shouldn't) move because a more valuable piece sits behind it on the same line.
+      <span class="tip">It's frozen — so attack it again, often with a pawn.</span></p></div></div>
+    <div class="pat"><div class="ic">🍢</div><div>
+      <h2>Skewer</h2>
+      <p>A pin in reverse: the valuable piece is in front, forced to move, exposing the lesser piece behind it.
+      <span class="tip">Hit a king or queen on an open line and grab what's behind.</span></p></div></div>
+    <div class="pat"><div class="ic">💥</div><div>
+      <h2>Discovered attack</h2>
+      <p>Move one piece to unleash an attack from the piece behind it — two threats from one move.
+      <span class="tip">A “discovered check” is brutal: the moving piece can grab anything while the king deals with check.</span></p></div></div>
+    <div class="pat"><div class="ic">♜</div><div>
+      <h2>Back-rank mate</h2>
+      <p>A king trapped behind its own un-moved pawns, mated by a rook or queen sliding onto the back row.
+      <span class="tip">Give your own king “luft” (a pawn move for air) to avoid it.</span></p></div></div>
+  </div>
+  <div class="hunt"><b>How to hunt tactics:</b> after your blunder-check, scan for enemy <b>loose pieces</b> and an
+  <b>exposed king</b>. Then ask: is there a single move that hits two of them (fork), lines two up (pin / skewer),
+  or unmasks an attacker (discovery)? Tactics live on checks, captures, and undefended pieces.</div>
+  <div class="foot">Paul McLear · learning workspace · companion to Lesson 0002 “The Fork”</div>
+</div>
+</body>
+</html>
